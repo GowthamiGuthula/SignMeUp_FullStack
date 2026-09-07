@@ -1,0 +1,48 @@
+.about {
+    width: 100%;
+    margin: 0 auto;
+  }
+  
+  .about-title {
+    font-size: 1.75rem;
+    font-weight: 700;
+    color: #0f172a;
+    margin-bottom: 1rem;
+  }
+  
+  .about-subtitle {
+    font-size: 1.15rem;
+    font-weight: 700;
+    color: #334155;
+    margin-top: 1.5rem;
+    margin-bottom: 0.5rem;
+  }
+  
+  .about-text {
+    color: #475569;
+    line-height: 1.7;
+    font-size: 0.95rem;
+  }
+  
+  .about-list {
+    list-style: disc;
+    padding-left: 1.5rem;
+    color: #475569;
+    line-height: 1.8;
+    font-size: 0.92rem;
+  }
+  
+  .about-link {
+    display: inline-block;
+    margin-top: 2rem;
+    padding: 0.6rem 1.5rem;
+    background: #6366f1;
+    color: #ffffff;
+    border-radius: 8px;
+    font-weight: 600;
+  }
+  
+  .about-link:hover {
+    background: #4f46e5;
+  }
+  

@@ -1,0 +1,153 @@
+.event-card {
+    display: flex;
+    background: #ffffff;
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 1px 6px rgba(0, 0, 0, 0.06);
+    transition: box-shadow 0.2s ease, transform 0.2s ease;
+    text-decoration: none;
+    color: inherit;
+  }
+  
+  .event-card:hover {
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
+    transform: translateY(-2px);
+  }
+  
+  .event-card-img {
+    width: 200px;
+    min-height: 160px;
+    object-fit: cover;
+    flex-shrink: 0;
+  }
+  
+  .event-card-body {
+    flex: 1;
+    padding: 1.25rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+  
+  .event-card-top {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 0.5rem;
+  }
+  
+  .event-card-name {
+    font-size: 1.05rem;
+    font-weight: 700;
+    color: #0f172a;
+  }
+  
+  .event-card-category {
+    padding: 0.2rem 0.6rem;
+    border-radius: 12px;
+    font-size: 0.7rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    background: #eef2ff;
+    color: #6366f1;
+    white-space: nowrap;
+  }
+  
+  .event-card-desc {
+    font-size: 0.85rem;
+    color: #64748b;
+    line-height: 1.5;
+  }
+  
+  .event-card-meta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem 1rem;
+    margin-top: auto;
+    font-size: 0.8rem;
+    color: #475569;
+  }
+  
+  .event-card--past {
+    opacity: 0.55;
+    background: #f1f5f9;
+  }
+  
+  .event-card--past .event-card-img {
+    filter: grayscale(70%);
+  }
+  
+  .event-card--past:hover {
+    transform: none;
+    box-shadow: 0 1px 6px rgba(0, 0, 0, 0.05);
+  }
+  
+  .event-card-past-label {
+    display: inline-block;
+    align-self: flex-start;
+    padding: 0.2rem 0.6rem;
+    background: #94a3b8;
+    color: #ffffff;
+    border-radius: 6px;
+    font-size: 0.7rem;
+    font-weight: 700;
+    text-transform: uppercase;
+  }
+  
+  .event-card-attendees {
+    margin-top: 0.5rem;
+    padding-top: 0.5rem;
+    border-top: 1px solid #e2e8f0;
+  }
+  
+  .event-card-attendees-label {
+    font-size: 0.75rem;
+    font-weight: 600;
+    color: #64748b;
+    display: block;
+    margin-bottom: 0.25rem;
+  }
+  
+  .event-card-attendees-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.25rem 0.5rem;
+    align-items: center;
+  }
+  
+  .event-card-attendee-name {
+    font-size: 0.75rem;
+    color: #6366f1;
+    background: #eef2ff;
+    padding: 0.15rem 0.4rem;
+    border-radius: 4px;
+    font-weight: 500;
+  }
+  
+  .event-card-attendees-more {
+    font-size: 0.7rem;
+    color: #94a3b8;
+    font-style: italic;
+  }
+  
+  @media (max-width: 768px) {
+    .event-card {
+      flex-direction: column;
+    }
+  
+    .event-card-img {
+      width: 100%;
+      max-height: 180px;
+    }
+  
+    .event-card-top {
+      flex-direction: column;
+      gap: 0.3rem;
+    }
+  
+    .event-card-meta {
+      flex-direction: column;
+      gap: 0.25rem;
+    }
+  }
+  

@@ -1,0 +1,97 @@
+.add-event {
+    width: 100%;
+    margin: 0 auto;
+  }
+  
+  .add-event-title {
+    font-size: 1.75rem;
+    font-weight: 700;
+    color: #0f172a;
+    margin-bottom: 1.25rem;
+  }
+  
+  .add-event-form {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+  }
+  
+  .add-event-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem;
+  }
+  
+  .add-event-label {
+    display: flex;
+    flex-direction: column;
+    gap: 0.3rem;
+    font-size: 0.88rem;
+    font-weight: 600;
+    color: #334155;
+  }
+  
+  .add-event-input {
+    padding: 0.6rem 0.85rem;
+    border: 1.5px solid #e2e8f0;
+    border-radius: 8px;
+    font-size: 0.9rem;
+    font-family: inherit;
+    color: #1e293b;
+    background: #ffffff;
+  }
+  
+  .add-event-input:focus {
+    border-color: #6366f1;
+    outline: none;
+  }
+  
+  .add-event-error {
+    color: #dc2626;
+    font-size: 0.88rem;
+    font-weight: 600;
+  }
+
+  .add-event-actions {
+    display: flex;
+    gap: 0.75rem;
+    margin-top: 0.5rem;
+  }
+  
+  .add-event-btn {
+    padding: 0.65rem 1.5rem;
+    border: none;
+    border-radius: 8px;
+    font-weight: 600;
+    font-size: 0.9rem;
+    cursor: pointer;
+  }
+  
+  .add-event-btn--primary {
+    background: #6366f1;
+    color: #ffffff;
+  }
+  
+  .add-event-btn--primary:hover {
+    background: #4f46e5;
+  }
+  
+  .add-event-btn--secondary {
+    background: #e2e8f0;
+    color: #334155;
+  }
+  
+  .add-event-btn--secondary:hover {
+    background: #cbd5e1;
+  }
+  
+  @media (max-width: 768px) {
+    .add-event-row {
+      grid-template-columns: 1fr;
+    }
+  
+    .add-event-actions {
+      flex-direction: column;
+    }
+  }
+  

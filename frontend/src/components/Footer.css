@@ -1,0 +1,20 @@
+.footer {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 1.25rem 2.5rem;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: rgba(255, 255, 255, 0.9);
+    font-size: 0.85rem;
+    letter-spacing: 0.3px;
+    border-top: 3px solid #5a67d8;
+    box-shadow: 0 -4px 20px rgba(0, 0, 0, 0.1);
+  }
+  
+  @media (max-width: 768px) {
+    .footer {
+      padding: 1rem 1rem;
+      font-size: 0.75rem;
+    }
+  }
+  

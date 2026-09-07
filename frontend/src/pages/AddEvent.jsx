@@ -16,34 +16,24 @@ function AddEvent() {
   const [totalSlots, setTotalSlots] = useState('')
   const [description, setDescription] = useState('')
   const [image, setImage] = useState('')
-  const [organizerEmail, setOrganizerEmail] = useState('')
-  const [submitting, setSubmitting] = useState(false)
-  const [submitError, setSubmitError] = useState('')
 
-  const handleSubmit = async (e) => {
+  const handleSubmit = (e) => {
     e.preventDefault()
-    if (!name || !date || !time || !location || !totalSlots || !description || !organizerEmail) return
+    if (!name || !date || !time || !location || !totalSlots || !description) return
 
-    setSubmitting(true)
-    setSubmitError('')
-    try {
-      await addEvent({
-        name,
-        date,
-        time,
-        location,
-        category,
-        totalSlots: Number(totalSlots),
-        description,
-        image: image || 'https://images.unsplash.com/photo-1501281668745-f7f57925c3b4?w=600&h=350&fit=crop',
-        organizerEmail,
-      })
-      navigate('/events')
-    } catch (err) {
-      setSubmitError(err.message)
-    } finally {
-      setSubmitting(false)
-    }
+    addEvent({
+      name,
+      date,
+      time,
+      location,
+      category,
+      totalSlots: Number(totalSlots),
+      description,
+      image: image || 'https://images.unsplash.com/photo-1501281668745-f7f57925c3b4?w=600&h=350&fit=crop',
+    })
+
+    // Navigate back to Events page after adding
+    navigate('/events')
   }
 
   return (
@@ -145,22 +135,9 @@ function AddEvent() {
           />
         </label>
 
-        <label className="add-event-label">
-          Your Email (organizer) *
-          <input
-            type="email"
-            value={organizerEmail}
-            onChange={(e) => setOrganizerEmail(e.target.value)}
-            placeholder="you@example.com"
-            className="add-event-input"
-          />
-        </label>
-
-        {submitError && <p className="add-event-error">{submitError}</p>}
-
         <div className="add-event-actions">
-          <button type="submit" className="add-event-btn add-event-btn--primary" disabled={submitting}>
-            {submitting ? 'Creating...' : 'Create Event'}
+          <button type="submit" className="add-event-btn add-event-btn--primary">
+            Create Event
           </button>
           <button type="button" className="add-event-btn add-event-btn--secondary" onClick={() => navigate('/events')}>
             Cancel

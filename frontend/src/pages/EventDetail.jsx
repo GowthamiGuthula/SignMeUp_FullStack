@@ -11,13 +11,14 @@ function EventDetail() {
   const { id } = useParams()
 
   // Use custom hook for attendee management
-  const {
-    event,
-    findDuplicateAttendee,
-    isAlreadyAttending,
-    rsvpToEvent,
-    cancelRsvp,
-    slotsLeft
+  const { 
+    event, 
+    findDuplicateAttendee, 
+    isAlreadyAttending, 
+    rsvpToEvent, 
+    cancelRsvp, 
+    getAttendeeNameForRSVP,
+    slotsLeft 
   } = useAttendees(Number(id))
 
   // Consolidated state management using single object
@@ -36,7 +37,6 @@ function EventDetail() {
     savedUserInfo: {
       firstName: '',
       lastName: '',
-      email: '',
       fullName: ''
     },
     
@@ -77,13 +77,13 @@ function EventDetail() {
   // Use custom hook for duplicate checking
   const alreadyAttending = isAlreadyAttending(rsvpForm.savedUserInfo)
 
-  const handleRSVPFormSubmit = async (formData) => {
+  const handleRSVPFormSubmit = (formData) => {
     // Check for duplicate attendee only for "Attending" RSVP
     if (formData.rsvp === 'Attending') {
       const existing = findDuplicateAttendee(
-        formData.firstName,
-        formData.lastName,
-        formData.email,
+        formData.firstName, 
+        formData.lastName, 
+        formData.email, 
         formData.phone
       )
 
@@ -105,65 +105,59 @@ function EventDetail() {
       phone: formData.phone
     }
 
-    // Process RSVP if attending and not already registered
-    if (formData.rsvp === 'Attending' && !alreadyAttending) {
-      try {
-        await rsvpToEvent(event.id, userInfo)
-      } catch (err) {
-        setRsvpForm(prev => ({
-          ...prev,
-          errors: { duplicate: err.message }
-        }))
-        return
-      }
-    }
-
     // Save user information and update state
     setRsvpForm(prev => ({
       ...prev,
       savedUserInfo: {
         firstName: userInfo.firstName,
         lastName: userInfo.lastName,
-        email: userInfo.email,
         fullName: `${userInfo.firstName} ${userInfo.lastName}`
       },
       hasRsvped: true,
       rsvp: formData.rsvp
     }))
+
+    // Process RSVP if attending and not already registered
+    if (formData.rsvp === 'Attending' && !alreadyAttending) {
+      rsvpToEvent(event.id, userInfo)
+    }
   }
 
-  const handleCancel = async () => {
-    if (alreadyAttending && rsvpForm.savedUserInfo.email) {
-      await cancelRsvp(event.id, rsvpForm.savedUserInfo.email)
+  const handleCancel = () => {
+    if (alreadyAttending) {
+      const userName = getAttendeeNameForRSVP(rsvpForm.savedUserInfo)
+      cancelRsvp(event.id, userName)
     }
-
+    
     // Reset form state
     setRsvpForm(prev => ({
       ...prev,
       rsvp: '',
       hasRsvped: false,
-      savedUserInfo: { firstName: '', lastName: '', email: '', fullName: '' }
+      savedUserInfo: { firstName: '', lastName: '', fullName: '' }
     }))
   }
 
-  const handleEdit = async () => {
-    if (alreadyAttending && rsvpForm.savedUserInfo.email) {
-      await cancelRsvp(event.id, rsvpForm.savedUserInfo.email)
+  const handleEdit = () => {
+    if (alreadyAttending) {
+      const userName = getAttendeeNameForRSVP(rsvpForm.savedUserInfo)
+      cancelRsvp(event.id, userName)
     }
-
+    
     // Reset to form state
     setRsvpForm(prev => ({
       ...prev,
       hasRsvped: false,
-      savedUserInfo: { firstName: '', lastName: '', email: '', fullName: '' }
+      savedUserInfo: { firstName: '', lastName: '', fullName: '' }
     }))
   }
 
-  const handleCancelExisting = async () => {
-    if (rsvpForm.existingAttendee?.email) {
-      await cancelRsvp(event.id, rsvpForm.existingAttendee.email)
+  const handleCancelExisting = () => {
+    if (rsvpForm.existingAttendee) {
+      const attendeeName = getAttendeeNameForRSVP(rsvpForm.existingAttendee)
+      cancelRsvp(event.id, attendeeName)
     }
-
+    
     // Reset form completely
     setRsvpForm(prev => ({
       ...prev,
@@ -177,15 +171,14 @@ function EventDetail() {
     }))
   }
 
-  const handleEditExisting = async () => {
+  const handleEditExisting = () => {
     if (rsvpForm.existingAttendee) {
       const existing = rsvpForm.existingAttendee
-
+      
       // Remove existing attendee first
-      if (existing.email) {
-        await cancelRsvp(event.id, existing.email)
-      }
-
+      const attendeeName = getAttendeeNameForRSVP(existing)
+      cancelRsvp(event.id, attendeeName)
+      
       // Populate form with existing data
       setRsvpForm(prev => ({
         ...prev,

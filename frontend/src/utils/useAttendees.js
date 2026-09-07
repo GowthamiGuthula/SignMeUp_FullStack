@@ -48,14 +48,6 @@ export const useAttendees = (eventId) => {
     return Math.max(0, event.attendees.length - limit)
   }
   
-  const getAttendeeNameForRSVP = (attendee) => {
-    if (typeof attendee === 'string') return attendee
-    if (attendee?.firstName && attendee?.lastName) {
-      return `${attendee.firstName} ${attendee.lastName}`
-    }
-    return attendee?.name || ''
-  }
-  
   return {
     // Event data
     event,
@@ -72,8 +64,7 @@ export const useAttendees = (eventId) => {
     // RSVP operations
     rsvpToEvent,
     cancelRsvp,
-    getAttendeeNameForRSVP,
-    
+
     // Event metadata
     slotsLeft: event ? event.totalSlots - event.slotsBooked : 0,
     totalSlots: event?.totalSlots || 0,

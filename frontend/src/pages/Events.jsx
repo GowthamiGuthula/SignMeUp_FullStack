@@ -10,7 +10,7 @@ function isPast(event) {
 
 function Events() {
   // Get events from Context (shared state)
-  const { events } = useEvents()
+  const { events, loading, error } = useEvents()
 
   // useState for search text
   const [search, setSearch] = useState('')
@@ -43,10 +43,14 @@ function Events() {
       />
 
       <div className="events-grid">
-        {filtered.map((ev) => (
+        {loading && <p className="events-empty">Loading events...</p>}
+        {!loading && error && (
+          <p className="events-empty">Could not load events: {error}</p>
+        )}
+        {!loading && !error && filtered.map((ev) => (
           <EventCard key={ev.id} event={ev} isPast={isPast(ev)} />
         ))}
-        {filtered.length === 0 && (
+        {!loading && !error && filtered.length === 0 && (
           <p className="events-empty">No events found.</p>
         )}
       </div>

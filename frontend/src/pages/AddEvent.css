@@ -46,6 +46,12 @@
     outline: none;
   }
   
+  .add-event-error {
+    color: #dc2626;
+    font-size: 0.88rem;
+    font-weight: 600;
+  }
+
   .add-event-actions {
     display: flex;
     gap: 0.75rem;

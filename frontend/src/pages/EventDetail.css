@@ -1,0 +1,437 @@
+.detail {
+    width: 100%;
+    margin: 0 auto;
+    padding: 0;
+  }
+  
+  .detail-back {
+    display: inline-block;
+    margin-bottom: 1rem;
+    color: #6366f1;
+    font-weight: 600;
+  }
+  
+  .detail-back:hover {
+    text-decoration: underline;
+  }
+  
+  .detail-image {
+    width: 100%;
+    height: 380px;
+    object-fit: cover;
+    border-radius: 16px;
+    margin-bottom: 2rem;
+    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.12);
+    transition: transform 0.3s ease;
+  }
+  
+  .detail-image:hover {
+    transform: scale(1.02);
+  }
+  
+  .detail-card {
+    background: #ffffff;
+    border-radius: 16px;
+    padding: 2rem;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+    margin-bottom: 2rem;
+    border: 1px solid #f1f5f9;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+  }
+  
+  .detail-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.12);
+  }
+  
+  .detail-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 0.75rem;
+    margin-bottom: 1rem;
+  }
+  
+  .detail-title {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: #0f172a;
+  }
+  
+  .detail-category {
+    padding: 0.25rem 0.75rem;
+    border-radius: 12px;
+    font-size: 0.7rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    background: #eef2ff;
+    color: #6366f1;
+    white-space: nowrap;
+  }
+  
+  .detail-info {
+    display: flex;
+    flex-direction: column;
+    gap: 0.35rem;
+    margin-bottom: 1rem;
+    font-size: 0.92rem;
+    color: #334155;
+  }
+  
+  .detail-slots-bar {
+    height: 8px;
+    background: #e2e8f0;
+    border-radius: 4px;
+    margin-bottom: 1.25rem;
+    overflow: hidden;
+  }
+  
+  .detail-slots-fill {
+    height: 100%;
+    background: #6366f1;
+    border-radius: 4px;
+  }
+  
+  .detail-section-title {
+    font-size: 1.05rem;
+    font-weight: 700;
+    color: #334155;
+    margin-bottom: 0.5rem;
+  }
+  
+  .detail-desc {
+    color: #475569;
+    line-height: 1.7;
+    font-size: 0.92rem;
+  }
+  
+  .detail-muted {
+    color: #94a3b8;
+    font-size: 0.9rem;
+  }
+  
+  .detail-empty {
+    text-align: center;
+    padding: 3rem;
+    color: #94a3b8;
+  }
+  
+  /* RSVP form fields */
+  .detail-rsvp-form {
+    margin-bottom: 1.5rem;
+  }
+  
+  .detail-rsvp-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0.75rem;
+    margin-bottom: 0.75rem;
+  }
+  
+  .detail-rsvp-label {
+    display: flex;
+    flex-direction: column;
+    gap: 0.3rem;
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: #334155;
+  }
+  
+  .detail-rsvp-input {
+    padding: 0.5rem 0.75rem;
+    border: 1.5px solid #e2e8f0;
+    border-radius: 6px;
+    font-size: 0.88rem;
+    font-family: inherit;
+    color: #1e293b;
+    background: #ffffff;
+  }
+  
+  .detail-rsvp-input:focus {
+    border-color: #6366f1;
+    outline: none;
+  }
+  
+  .detail-rsvp-input--error {
+    border-color: #dc2626;
+  }
+  
+  .detail-rsvp-input--error:focus {
+    border-color: #dc2626;
+    box-shadow: 0 0 0 2px rgba(220, 38, 38, 0.15);
+  }
+  
+  .detail-rsvp-error {
+    font-size: 0.75rem;
+    color: #dc2626;
+    margin-top: 0.25rem;
+    display: block;
+  }
+  
+  .detail-rsvp-note {
+    font-size: 0.8rem;
+    color: #64748b;
+    margin-top: 0.5rem;
+    margin-bottom: 0;
+  }
+  
+  .detail-rsvp-duplicate {
+    margin-top: 1rem;
+    padding: 0.75rem;
+    background: #fef2f2;
+    border: 1px solid #fecaca;
+    border-radius: 6px;
+    position: relative;
+  }
+  
+  .detail-rsvp-duplicate-close {
+    position: absolute;
+    top: 0.5rem;
+    right: 0.5rem;
+    width: 24px;
+    height: 24px;
+    border: none;
+    background: transparent;
+    color: #dc2626;
+    font-size: 18px;
+    font-weight: bold;
+    cursor: pointer;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.2s ease;
+    line-height: 1;
+  }
+  
+  .detail-rsvp-duplicate-close:hover {
+    background: #fecaca;
+    color: #b91c1c;
+  }
+  
+  .detail-rsvp-duplicate-close:focus {
+    outline: 2px solid #dc2626;
+    outline-offset: 1px;
+  }
+  
+  .detail-rsvp-duplicate-actions {
+    margin-top: 0.5rem;
+  }
+  
+  .detail-rsvp-duplicate-info {
+    font-size: 0.85rem;
+    color: #dc2626;
+    font-weight: 500;
+    margin: 0 0 0.5rem 0;
+  }
+  
+  .detail-rsvp-duplicate-buttons {
+    display: flex;
+    gap: 0.5rem;
+    flex-wrap: wrap;
+  }
+  
+  .btn--small {
+    padding: 0.25rem 0.75rem;
+    font-size: 0.8rem;
+  }
+  
+  /* RSVP options */
+  .detail-rsvp-options {
+    display: flex;
+    gap: 0.6rem;
+    margin-bottom: 1rem;
+  }
+  
+  .rsvp-option {
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+    padding: 0.5rem 1rem;
+    border: 2px solid #e2e8f0;
+    border-radius: 8px;
+    cursor: pointer;
+    font-weight: 600;
+    font-size: 0.88rem;
+    color: #475569;
+  }
+  
+  .rsvp-option input {
+    width: auto;
+    accent-color: #6366f1;
+  }
+  
+  .rsvp-option:hover {
+    border-color: #6366f1;
+  }
+  
+  .rsvp-option--selected {
+    border-color: #6366f1;
+    background: #eef2ff;
+    color: #6366f1;
+  }
+  
+  /* RSVP submitted state */
+  .detail-rsvp-submitted {
+    padding: 1.25rem;
+    background: #f0fdf4;
+    border-radius: 10px;
+    border: 1px solid #bbf7d0;
+  }
+  
+  .detail-rsvp-success {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1rem;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+  }
+  
+  .detail-rsvp-status {
+    display: inline-block;
+    padding: 0.35rem 0.75rem;
+    background: #16a34a;
+    color: #ffffff;
+    border-radius: 20px;
+    font-size: 0.8rem;
+    font-weight: 700;
+    text-transform: uppercase;
+  }
+  
+  .detail-rsvp-response {
+    font-size: 0.95rem;
+    color: #166534;
+  }
+  
+  .detail-rsvp-user-info {
+    padding: 0.75rem;
+    background: #ffffff;
+    border-radius: 6px;
+    margin-bottom: 1rem;
+  }
+  
+  .detail-rsvp-user-info p {
+    margin: 0;
+    font-size: 0.9rem;
+  }
+  
+  .detail-rsvp-user-info p:first-child {
+    font-weight: 600;
+    color: #0f172a;
+    margin-bottom: 0.25rem;
+  }
+  
+  .detail-rsvp-contact {
+    color: #64748b !important;
+    font-size: 0.85rem !important;
+  }
+  
+  .detail-rsvp-actions {
+    display: flex;
+    gap: 0.5rem;
+  }
+  
+  /* Attendees */
+  .detail-attendees {
+    list-style: none;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.6rem;
+  }
+  
+  .detail-attendee {
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+    padding: 0.35rem 0.75rem;
+    background: #f8fafc;
+    border-radius: 20px;
+    font-size: 0.88rem;
+    color: #334155;
+  }
+  
+  .detail-attendee-avatar {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 26px;
+    height: 26px;
+    border-radius: 50%;
+    background: #6366f1;
+    color: #ffffff;
+    font-size: 0.72rem;
+    font-weight: 700;
+  }
+  
+  /* Buttons */
+  .btn {
+    padding: 0.6rem 1.5rem;
+    border: none;
+    border-radius: 8px;
+    font-weight: 600;
+    font-size: 0.9rem;
+    cursor: pointer;
+  }
+  
+  .btn--primary {
+    background: #6366f1;
+    color: #ffffff;
+  }
+  
+  .btn--primary:hover {
+    background: #4f46e5;
+  }
+  
+  .btn--primary:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+  }
+  
+  .btn--secondary {
+    background: #e2e8f0;
+    color: #334155;
+  }
+  
+  .btn--danger {
+    background: #fee2e2;
+    color: #dc2626;
+  }
+  
+  .btn--danger:hover {
+    background: #fca5a5;
+  }
+  
+  @media (max-width: 768px) {
+    .detail-image {
+      height: 200px;
+    }
+  
+    .detail-header {
+      flex-direction: column;
+      gap: 0.4rem;
+    }
+  
+    .detail-title {
+      font-size: 1.2rem;
+    }
+  
+    .detail-rsvp-row {
+      grid-template-columns: 1fr;
+      gap: 0.5rem;
+    }
+  
+    .detail-rsvp-options {
+      flex-direction: column;
+    }
+  
+    .detail-rsvp-success {
+      flex-direction: column;
+      align-items: flex-start;
+    }
+  
+    .detail-rsvp-actions {
+      flex-direction: column;
+    }
+  }
+  

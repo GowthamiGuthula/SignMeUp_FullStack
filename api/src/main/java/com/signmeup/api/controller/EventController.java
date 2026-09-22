@@ -34,4 +34,9 @@ public class EventController {
         EventResponse created = eventService.createEvent(request);
         return ResponseEntity.status(HttpStatus.CREATED).body(created);
     }
+
+    @PutMapping("/{id}")
+    public EventResponse updateEvent(@PathVariable Long id, @RequestBody EventRequest request) {
+        return eventService.updateEvent(id, request);
+    }
 }

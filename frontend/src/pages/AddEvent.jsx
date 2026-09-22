@@ -1,11 +1,13 @@
-import { useState } from 'react'
-import { useNavigate } from 'react-router-dom'
+import { useEffect, useState } from 'react'
+import { useNavigate, useParams } from 'react-router-dom'
 import { useEvents } from '../context/EventsContext'
 import './AddEvent.css'
 
 function AddEvent() {
-  const { addEvent } = useEvents()
+  const { events, addEvent, updateEvent } = useEvents()
   const navigate = useNavigate()
+  const { id } = useParams()
+  const isEditing = Boolean(id)
 
   // useState for each form field
   const [name, setName] = useState('')
@@ -20,6 +22,23 @@ function AddEvent() {
   const [submitting, setSubmitting] = useState(false)
   const [submitError, setSubmitError] = useState('')
 
+  // When editing, load the existing event's details into the form
+  useEffect(() => {
+    if (!isEditing) return
+    const existing = events.find((ev) => ev.id === Number(id))
+    if (!existing) return
+
+    setName(existing.name)
+    setDate(existing.date)
+    setTime(existing.time)
+    setLocation(existing.location)
+    setCategory(existing.category)
+    setTotalSlots(String(existing.totalSlots))
+    setDescription(existing.description)
+    setImage(existing.image)
+    setOrganizerEmail(existing.organizerEmail)
+  }, [isEditing, id, events])
+
   const handleSubmit = async (e) => {
     e.preventDefault()
     if (!name || !date || !time || !location || !totalSlots || !description || !organizerEmail) return
@@ -27,7 +46,7 @@ function AddEvent() {
     setSubmitting(true)
     setSubmitError('')
     try {
-      await addEvent({
+      const eventData = {
         name,
         date,
         time,
@@ -37,8 +56,15 @@ function AddEvent() {
         description,
         image: image || 'https://images.unsplash.com/photo-1501281668745-f7f57925c3b4?w=600&h=350&fit=crop',
         organizerEmail,
-      })
-      navigate('/events')
+      }
+
+      if (isEditing) {
+        await updateEvent(Number(id), eventData)
+        navigate(`/events/${id}`)
+      } else {
+        const newId = await addEvent(eventData)
+        navigate(`/events/${newId}`)
+      }
     } catch (err) {
       setSubmitError(err.message)
     } finally {
@@ -48,7 +74,7 @@ function AddEvent() {
 
   return (
     <div className="add-event">
-      <h1 className="add-event-title">Add New Event</h1>
+      <h1 className="add-event-title">{isEditing ? 'Edit Event' : 'Add New Event'}</h1>
 
       <form className="add-event-form" onSubmit={handleSubmit}>
         <label className="add-event-label">
@@ -160,9 +186,15 @@ function AddEvent() {
 
         <div className="add-event-actions">
           <button type="submit" className="add-event-btn add-event-btn--primary" disabled={submitting}>
-            {submitting ? 'Creating...' : 'Create Event'}
+            {submitting
+              ? (isEditing ? 'Saving...' : 'Creating...')
+              : (isEditing ? 'Save Changes' : 'Create Event')}
           </button>
-          <button type="button" className="add-event-btn add-event-btn--secondary" onClick={() => navigate('/events')}>
+          <button
+            type="button"
+            className="add-event-btn add-event-btn--secondary"
+            onClick={() => navigate(isEditing ? `/events/${id}` : '/events')}
+          >
             Cancel
           </button>
         </div>

@@ -15,6 +15,7 @@ function mapEvent(apiEvent, rsvps = []) {
     slotsBooked: apiEvent.slotsBooked,
     description: apiEvent.description,
     image: apiEvent.imageUrl,
+    organizerEmail: apiEvent.organizerEmail,
     attendees: rsvps
       .filter((r) => r.status === 'ATTENDING')
       .map((r) => ({
@@ -98,8 +99,26 @@ export function EventsProvider({ children }) {
     return mapped.id
   }
 
+  const updateEvent = async (eventId, updatedEvent) => {
+    const saved = await api.updateEvent(eventId, {
+      name: updatedEvent.name,
+      date: updatedEvent.date,
+      time: updatedEvent.time,
+      location: updatedEvent.location,
+      category: api.toBackendCategory(updatedEvent.category),
+      totalSlots: updatedEvent.totalSlots,
+      description: updatedEvent.description,
+      imageUrl: updatedEvent.image,
+      organizerEmail: updatedEvent.organizerEmail,
+    })
+    const rsvps = await api.fetchAttendees(eventId)
+    const mapped = mapEvent(saved, rsvps)
+    setEvents((prev) => prev.map((ev) => (ev.id === eventId ? mapped : ev)))
+    return mapped.id
+  }
+
   return (
-    <EventsContext.Provider value={{ events, loading, error, rsvpToEvent, cancelRsvp, addEvent }}>
+    <EventsContext.Provider value={{ events, loading, error, rsvpToEvent, cancelRsvp, addEvent, updateEvent }}>
       {children}
     </EventsContext.Provider>
   )

@@ -3,14 +3,149 @@
   margin: 0 auto;
 }
 
+.my-events-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1.25rem;
+}
+
 .my-events-title {
   font-size: 1.75rem;
   font-weight: 700;
   color: #0f172a;
-  margin-bottom: 0.5rem;
 }
 
-.my-events-text {
-  color: #64748b;
-  font-size: 0.95rem;
+.my-events-add-link {
+  padding: 0.5rem 1.25rem;
+  background: #6366f1;
+  color: #ffffff;
+  border-radius: 8px;
+  font-weight: 600;
+  font-size: 0.9rem;
+}
+
+.my-events-add-link:hover {
+  background: #4f46e5;
+}
+
+.my-events-empty {
+  text-align: center;
+  padding: 3rem;
+  color: #94a3b8;
+}
+
+.my-events-list {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.my-events-card {
+  display: flex;
+  background: #ffffff;
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 1px 6px rgba(0, 0, 0, 0.06);
+}
+
+.my-events-card-img {
+  width: 200px;
+  min-height: 160px;
+  object-fit: cover;
+  flex-shrink: 0;
+}
+
+.my-events-card-body {
+  flex: 1;
+  padding: 1.25rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.my-events-card-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 0.5rem;
+}
+
+.my-events-card-name {
+  font-size: 1.05rem;
+  font-weight: 700;
+  color: #0f172a;
+}
+
+.my-events-card-category {
+  padding: 0.2rem 0.6rem;
+  border-radius: 12px;
+  font-size: 0.7rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  background: #eef2ff;
+  color: #6366f1;
+  white-space: nowrap;
+}
+
+.my-events-card-meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem 1rem;
+  font-size: 0.8rem;
+  color: #475569;
+}
+
+.my-events-card-actions {
+  display: flex;
+  gap: 0.6rem;
+  margin-top: auto;
+  padding-top: 0.5rem;
+}
+
+.my-events-btn {
+  padding: 0.4rem 1rem;
+  border-radius: 8px;
+  font-weight: 600;
+  font-size: 0.82rem;
+}
+
+.my-events-btn--primary {
+  background: #6366f1;
+  color: #ffffff;
+}
+
+.my-events-btn--primary:hover {
+  background: #4f46e5;
+}
+
+.my-events-btn--secondary {
+  background: #e2e8f0;
+  color: #334155;
+}
+
+.my-events-btn--secondary:hover {
+  background: #cbd5e1;
+}
+
+@media (max-width: 768px) {
+  .my-events-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.75rem;
+  }
+
+  .my-events-card {
+    flex-direction: column;
+  }
+
+  .my-events-card-img {
+    width: 100%;
+    max-height: 180px;
+  }
+
+  .my-events-card-top {
+    flex-direction: column;
+    gap: 0.3rem;
+  }
 }

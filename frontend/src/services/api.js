@@ -53,6 +53,13 @@ export function createEvent(payload) {
   })
 }
 
+export function updateEvent(id, payload) {
+  return request(`/events/${id}`, {
+    method: 'PUT',
+    body: JSON.stringify(payload),
+  })
+}
+
 export function fetchAttendees(eventId) {
   return request(`/events/${eventId}/rsvps`)
 }

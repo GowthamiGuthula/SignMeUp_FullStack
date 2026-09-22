@@ -57,6 +57,29 @@ public class EventService {
         return toResponse(eventRepository.save(event));
     }
 
+    public EventResponse updateEvent(Long id, EventRequest request) {
+        if (request.name() == null || request.name().isBlank()) {
+            throw new IllegalArgumentException("Event name is required");
+        }
+        if (request.totalSlots() == null || request.totalSlots() < 1) {
+            throw new IllegalArgumentException("Total slots must be at least 1");
+        }
+
+        Event event = findEventOrThrow(id);
+        event.setName(request.name());
+        event.setDate(request.date());
+        event.setTime(request.time());
+        event.setLocation(request.location());
+        event.setCategory(request.category());
+        event.setTotalSlots(request.totalSlots());
+        event.setDescription(request.description());
+        event.setImageUrl(request.imageUrl());
+        event.setVisibility(request.visibility() != null ? request.visibility() : event.getVisibility());
+        event.setOrganizerEmail(request.organizerEmail());
+
+        return toResponse(eventRepository.save(event));
+    }
+
     Event findEventOrThrow(Long id) {
         return eventRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Event not found with id " + id));

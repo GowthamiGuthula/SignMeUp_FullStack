@@ -30,6 +30,11 @@ public class RsvpController {
         return ResponseEntity.status(HttpStatus.CREATED).body(response);
     }
 
+    @PutMapping
+    public RsvpResponse updateRsvp(@PathVariable Long eventId, @RequestParam String email, @RequestBody RsvpRequest request) {
+        return rsvpService.updateRsvp(eventId, email, request);
+    }
+
     @DeleteMapping
     public ResponseEntity<Void> cancelRsvp(@PathVariable Long eventId, @RequestParam String email) {
         rsvpService.cancelRsvp(eventId, email);

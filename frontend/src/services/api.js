@@ -38,6 +38,15 @@ export function toBackendStatus(displayStatus) {
   return (displayStatus || 'ATTENDING').toUpperCase().replace(/\s+/g, '_')
 }
 
+export function toDisplayStatus(backendStatus) {
+  if (!backendStatus) return 'Attending'
+  return backendStatus
+    .toLowerCase()
+    .split('_')
+    .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
+    .join(' ')
+}
+
 export function fetchEvents() {
   return request('/events')
 }
@@ -75,6 +84,17 @@ export function cancelRsvp(eventId, email) {
   return request(`/events/${eventId}/rsvps?email=${encodeURIComponent(email)}`, {
     method: 'DELETE',
   })
+}
+
+export function updateRsvp(eventId, email, payload) {
+  return request(`/events/${eventId}/rsvps?email=${encodeURIComponent(email)}`, {
+    method: 'PUT',
+    body: JSON.stringify(payload),
+  })
+}
+
+export function fetchRsvpsByEmail(email) {
+  return request(`/rsvps?email=${encodeURIComponent(email)}`)
 }
 
 export function registerUser(payload) {

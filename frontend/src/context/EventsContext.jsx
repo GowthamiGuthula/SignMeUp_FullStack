@@ -82,6 +82,17 @@ export function EventsProvider({ children }) {
     await refreshEvent(eventId)
   }
 
+  const updateRsvpStatus = async (eventId, email, userInfo) => {
+    await api.updateRsvp(eventId, email, {
+      firstName: userInfo.firstName,
+      lastName: userInfo.lastName,
+      email: userInfo.email,
+      phone: userInfo.phone,
+      status: userInfo.status,
+    })
+    await refreshEvent(eventId)
+  }
+
   const addEvent = async (newEvent) => {
     const created = await api.createEvent({
       name: newEvent.name,
@@ -118,7 +129,7 @@ export function EventsProvider({ children }) {
   }
 
   return (
-    <EventsContext.Provider value={{ events, loading, error, rsvpToEvent, cancelRsvp, addEvent, updateEvent }}>
+    <EventsContext.Provider value={{ events, loading, error, rsvpToEvent, cancelRsvp, updateRsvpStatus, addEvent, updateEvent }}>
       {children}
     </EventsContext.Provider>
   )

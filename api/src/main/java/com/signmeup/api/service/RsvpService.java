@@ -55,9 +55,37 @@ public class RsvpService {
         rsvpRepository.delete(rsvp);
     }
 
+    public RsvpResponse updateRsvp(Long eventId, String email, RsvpRequest request) {
+        Rsvp rsvp = rsvpRepository.findByEventIdAndEmail(eventId, email)
+                .orElseThrow(() -> new ResourceNotFoundException(
+                        "No RSVP found for " + email + " on event " + eventId));
+
+        RsvpStatus newStatus = request.status() != null ? request.status() : rsvp.getStatus();
+        if (newStatus == RsvpStatus.ATTENDING && rsvp.getStatus() != RsvpStatus.ATTENDING) {
+            Event event = eventService.findEventOrThrow(eventId);
+            long attending = rsvpRepository.countAttendingByEventId(eventId);
+            if (attending >= event.getTotalSlots()) {
+                throw new EventFullException("This event is fully booked");
+            }
+        }
+
+        if (request.firstName() != null) rsvp.setFirstName(request.firstName());
+        if (request.lastName() != null) rsvp.setLastName(request.lastName());
+        if (request.phone() != null) rsvp.setPhone(request.phone());
+        rsvp.setStatus(newStatus);
+
+        return toResponse(rsvpRepository.save(rsvp));
+    }
+
     public List<RsvpResponse> getAttendees(Long eventId) {
         eventService.findEventOrThrow(eventId);
         return rsvpRepository.findByEventId(eventId).stream()
+                .map(this::toResponse)
+                .toList();
+    }
+
+    public List<RsvpResponse> getRsvpsByEmail(String email) {
+        return rsvpRepository.findByEmailOrderByCreatedAtDesc(email).stream()
                 .map(this::toResponse)
                 .toList();
     }

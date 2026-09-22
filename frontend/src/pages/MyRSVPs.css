@@ -1,0 +1,16 @@
+.my-rsvps {
+  width: 100%;
+  margin: 0 auto;
+}
+
+.my-rsvps-title {
+  font-size: 1.75rem;
+  font-weight: 700;
+  color: #0f172a;
+  margin-bottom: 0.5rem;
+}
+
+.my-rsvps-text {
+  color: #64748b;
+  font-size: 0.95rem;
+}

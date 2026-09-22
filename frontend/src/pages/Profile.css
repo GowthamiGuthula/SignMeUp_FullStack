@@ -1,0 +1,128 @@
+.profile {
+  width: 100%;
+  max-width: 480px;
+  margin: 0 auto;
+}
+
+.profile-title {
+  font-size: 1.75rem;
+  font-weight: 700;
+  color: #0f172a;
+  margin-bottom: 1.25rem;
+}
+
+.profile-card {
+  background: #ffffff;
+  border-radius: 12px;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+  padding: 1.75rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: 1.25rem;
+}
+
+.profile-avatar {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 72px;
+  height: 72px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #6366f1 0%, #8b5cf6 100%);
+  color: #ffffff;
+  font-size: 1.75rem;
+  font-weight: 700;
+}
+
+.profile-details {
+  width: 100%;
+  text-align: left;
+  display: grid;
+  grid-template-columns: auto 1fr;
+  row-gap: 0.75rem;
+  column-gap: 1rem;
+}
+
+.profile-details dt {
+  font-weight: 600;
+  color: #64748b;
+  font-size: 0.85rem;
+}
+
+.profile-details dd {
+  color: #1e293b;
+  font-size: 0.95rem;
+  margin: 0;
+}
+
+.profile-form {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  text-align: left;
+}
+
+.profile-label {
+  display: flex;
+  flex-direction: column;
+  gap: 0.3rem;
+  font-size: 0.88rem;
+  font-weight: 600;
+  color: #334155;
+}
+
+.profile-input {
+  padding: 0.6rem 0.85rem;
+  border: 1.5px solid #e2e8f0;
+  border-radius: 8px;
+  font-size: 0.9rem;
+  font-family: inherit;
+  color: #1e293b;
+  background: #ffffff;
+}
+
+.profile-input:focus {
+  border-color: #6366f1;
+  outline: none;
+}
+
+.profile-error {
+  color: #dc2626;
+  font-size: 0.88rem;
+  font-weight: 600;
+}
+
+.profile-actions {
+  display: flex;
+  gap: 0.75rem;
+}
+
+.profile-btn {
+  padding: 0.6rem 1.5rem;
+  border: none;
+  border-radius: 8px;
+  font-weight: 600;
+  font-size: 0.9rem;
+  cursor: pointer;
+}
+
+.profile-btn--primary {
+  background: #6366f1;
+  color: #ffffff;
+}
+
+.profile-btn--primary:hover {
+  background: #4f46e5;
+}
+
+.profile-btn--secondary {
+  background: #e2e8f0;
+  color: #334155;
+}
+
+.profile-btn--secondary:hover {
+  background: #cbd5e1;
+}

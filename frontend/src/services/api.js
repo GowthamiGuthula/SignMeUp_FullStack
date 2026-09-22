@@ -69,3 +69,35 @@ export function cancelRsvp(eventId, email) {
     method: 'DELETE',
   })
 }
+
+export function registerUser(payload) {
+  return request('/auth/register', {
+    method: 'POST',
+    body: JSON.stringify(payload),
+  })
+}
+
+export function loginUser(payload) {
+  return request('/auth/login', {
+    method: 'POST',
+    body: JSON.stringify(payload),
+  })
+}
+
+export function forgotPassword(payload) {
+  return request('/auth/forgot-password', {
+    method: 'POST',
+    body: JSON.stringify(payload),
+  })
+}
+
+export function fetchUser(id) {
+  return request(`/users/${id}`)
+}
+
+export function updateUser(id, payload) {
+  return request(`/users/${id}`, {
+    method: 'PUT',
+    body: JSON.stringify(payload),
+  })
+}

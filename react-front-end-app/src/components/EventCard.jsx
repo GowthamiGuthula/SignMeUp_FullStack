@@ -22,6 +22,11 @@ function EventCard({ event, isPast }) {
           <span><i className="fas fa-map-marker-alt"></i> {event.location}</span>
           <span><i className="fas fa-ticket-alt"></i> {slotsLeft} slots left</span>
         </div>
+        {event.organizerName && (
+          <p className="event-card-organizer">
+            <i className="fas fa-user"></i> Created by {event.organizerName}
+          </p>
+        )}
         {event.attendees.length > 0 && (
           <div className="event-card-attendees">
             <span className="event-card-attendees-label">Attendees:</span>

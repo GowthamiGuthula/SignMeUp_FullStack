@@ -68,6 +68,11 @@
     color: #475569;
   }
   
+  .event-card-organizer {
+    font-size: 0.78rem;
+    color: #64748b;
+  }
+
   .event-card--past {
     opacity: 0.55;
     background: #f1f5f9;

@@ -259,6 +259,9 @@ function EventDetail() {
           <span><i className="fas fa-clock"></i> {event.time}</span>
           <span><i className="fas fa-map-marker-alt"></i> {event.location}</span>
           <span><i className="fas fa-ticket-alt"></i> {slotsLeft} of {event.totalSlots} available</span>
+          {event.organizerName && (
+            <span><i className="fas fa-user"></i> Created by {event.organizerName}</span>
+          )}
         </div>
 
         {/* Slots progress bar */}

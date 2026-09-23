@@ -9,6 +9,7 @@ import com.signmeup.api.exception.ForbiddenException;
 import com.signmeup.api.exception.ResourceNotFoundException;
 import com.signmeup.api.repository.EventRepository;
 import com.signmeup.api.repository.RsvpRepository;
+import com.signmeup.api.repository.UserRepository;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
@@ -20,11 +21,14 @@ public class EventService {
     private final EventRepository eventRepository;
     private final RsvpRepository rsvpRepository;
     private final UnsplashService unsplashService;
+    private final UserRepository userRepository;
 
-    public EventService(EventRepository eventRepository, RsvpRepository rsvpRepository, UnsplashService unsplashService) {
+    public EventService(EventRepository eventRepository, RsvpRepository rsvpRepository,
+                         UnsplashService unsplashService, UserRepository userRepository) {
         this.eventRepository = eventRepository;
         this.rsvpRepository = rsvpRepository;
         this.unsplashService = unsplashService;
+        this.userRepository = userRepository;
     }
 
     public List<EventResponse> getAllEvents() {
@@ -124,7 +128,16 @@ public class EventService {
                 event.getImageUrl(),
                 event.getVisibility(),
                 event.getOrganizerEmail(),
+                resolveOrganizerName(event.getOrganizerEmail()),
                 event.getCreatedAt()
         );
+    }
+
+    private String resolveOrganizerName(String organizerEmail) {
+        return userRepository.findByEmail(organizerEmail)
+                .map(user -> user.getDisplayName() != null && !user.getDisplayName().isBlank()
+                        ? user.getDisplayName()
+                        : organizerEmail)
+                .orElse(organizerEmail);
     }
 }

@@ -16,6 +16,7 @@ function mapEvent(apiEvent, rsvps = []) {
     description: apiEvent.description,
     image: apiEvent.imageUrl,
     organizerEmail: apiEvent.organizerEmail,
+    organizerName: apiEvent.organizerName,
     attendees: rsvps
       .filter((r) => r.status === 'ATTENDING')
       .map((r) => ({

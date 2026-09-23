@@ -79,9 +79,9 @@ Wireframes for the app's key screens (home, events list, event detail, add/edit 
 The schema covers `users`, `roles` (many-to-many via `user_roles`), `events`, `rsvps`, `event_invitations`, `guest_access_tokens`, and `contact_messages`. See [`database/init.sql`](database/init.sql) for the full table definitions and sample seed data.
 
 ## Unsolved Problems & Future Features
-- **Private events & invitations are modeled but not wired up.** The `Event.visibility` field and `event_invitations` table support invite-only events, and the repository layer already has queries for "events visible to a given user," but the current `EventController`/`EventService` don't yet apply that filtering — `GET /api/events` returns every event regardless of visibility.
-- **Guest access tokens are unused.** The `guest_access_tokens` table was designed to let a non-account-holder manage their own RSVP via a emailed link/token, but no endpoint issues or validates these tokens yet.
-- **No automated test coverage.** The backend has only the default Spring Boot context-load test, and there are no frontend unit/integration tests yet. Testing so far has been manual, in the browser.
-- **No email notifications.** RSVP confirmations, event reminders, and invitation emails are not sent — everything happens synchronously in the UI.
-- **No pagination or filtering beyond a basic text search** on the events list, which could become slow with a large number of events.
-- **Uploaded images aren't cropped/resized client-side**, so very large photos are uploaded as-is (capped at 5MB) rather than optimized before upload.
+- Private events & invitations.
+- Guest access
+- No automated test coverage.
+- No email notifications.
+- No pagination or filtering beyond a basic text search
+- Uploaded images aren't cropped/resized client-side

@@ -4,6 +4,7 @@ import com.signmeup.api.dto.EventRequest;
 import com.signmeup.api.dto.EventResponse;
 import com.signmeup.api.entity.Event;
 import com.signmeup.api.entity.EventVisibility;
+import com.signmeup.api.exception.ForbiddenException;
 import com.signmeup.api.exception.ResourceNotFoundException;
 import com.signmeup.api.repository.EventRepository;
 import com.signmeup.api.repository.RsvpRepository;
@@ -78,6 +79,19 @@ public class EventService {
         event.setOrganizerEmail(request.organizerEmail());
 
         return toResponse(eventRepository.save(event));
+    }
+
+    public void deleteEvent(Long id, String requesterEmail) {
+        Event event = findEventOrThrow(id);
+
+        if (requesterEmail == null || requesterEmail.isBlank()) {
+            throw new ForbiddenException("You must be signed in as the organizer to delete this event");
+        }
+        if (!event.getOrganizerEmail().equalsIgnoreCase(requesterEmail.trim())) {
+            throw new ForbiddenException("Only the event organizer can delete this event");
+        }
+
+        eventRepository.delete(event);
     }
 
     Event findEventOrThrow(Long id) {

@@ -128,8 +128,13 @@ export function EventsProvider({ children }) {
     return mapped.id
   }
 
+  const deleteEvent = async (eventId, organizerEmail) => {
+    await api.deleteEvent(eventId, organizerEmail)
+    setEvents((prev) => prev.filter((ev) => ev.id !== eventId))
+  }
+
   return (
-    <EventsContext.Provider value={{ events, loading, error, rsvpToEvent, cancelRsvp, updateRsvpStatus, addEvent, updateEvent }}>
+    <EventsContext.Provider value={{ events, loading, error, rsvpToEvent, cancelRsvp, updateRsvpStatus, addEvent, updateEvent, deleteEvent }}>
       {children}
     </EventsContext.Provider>
   )

@@ -69,6 +69,12 @@ export function updateEvent(id, payload) {
   })
 }
 
+export function deleteEvent(id, organizerEmail) {
+  return request(`/events/${id}?organizerEmail=${encodeURIComponent(organizerEmail)}`, {
+    method: 'DELETE',
+  })
+}
+
 export function fetchAttendees(eventId) {
   return request(`/events/${eventId}/rsvps`)
 }

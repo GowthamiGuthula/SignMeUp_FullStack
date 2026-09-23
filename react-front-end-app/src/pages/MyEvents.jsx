@@ -1,3 +1,4 @@
+import { useState } from 'react'
 import { Link, Navigate } from 'react-router-dom'
 import { useAuth } from '../context/AuthContext'
 import { useEvents } from '../context/EventsContext'
@@ -5,7 +6,8 @@ import './MyEvents.css'
 
 function MyEvents() {
   const { currentUser } = useAuth()
-  const { events, loading, error } = useEvents()
+  const { events, loading, error, deleteEvent } = useEvents()
+  const [deletingId, setDeletingId] = useState(null)
 
   if (!currentUser) {
     return <Navigate to="/login" replace />
@@ -13,6 +15,18 @@ function MyEvents() {
 
   // Only show events this user organized
   const myEvents = events.filter((ev) => ev.organizerEmail === currentUser.email)
+
+  const handleDelete = async (ev) => {
+    if (!window.confirm(`Delete "${ev.name}"? This cannot be undone.`)) return
+    setDeletingId(ev.id)
+    try {
+      await deleteEvent(ev.id, currentUser.email)
+    } catch (err) {
+      window.alert(err.message || 'Could not delete event.')
+    } finally {
+      setDeletingId(null)
+    }
+  }
 
   return (
     <div className="my-events">
@@ -49,6 +63,14 @@ function MyEvents() {
                 <Link to={`/events/${ev.id}/edit`} className="my-events-btn my-events-btn--primary">
                   Edit
                 </Link>
+                <button
+                  type="button"
+                  className="my-events-btn my-events-btn--danger"
+                  onClick={() => handleDelete(ev)}
+                  disabled={deletingId === ev.id}
+                >
+                  {deletingId === ev.id ? 'Deleting...' : 'Delete'}
+                </button>
               </div>
             </div>
           </div>

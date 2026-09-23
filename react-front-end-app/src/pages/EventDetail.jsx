@@ -1,7 +1,9 @@
 import { useState } from 'react'
-import { useParams, Link } from 'react-router-dom'
+import { useParams, useNavigate, Link } from 'react-router-dom'
 import { useAttendees } from '../utils/useAttendees'
 import { formatAttendeeName, getAttendeeAvatarLetter } from '../utils/attendeeHelpers'
+import { useAuth } from '../context/AuthContext'
+import { useEvents } from '../context/EventsContext'
 import RSVPForm from '../components/RSVPForm'
 import './EventDetail.css'
 
@@ -9,6 +11,10 @@ import './EventDetail.css'
 function EventDetail() {
   // Get event ID from URL parameters
   const { id } = useParams()
+  const navigate = useNavigate()
+  const { currentUser } = useAuth()
+  const { deleteEvent } = useEvents()
+  const [deleting, setDeleting] = useState(false)
 
   // Use custom hook for attendee management
   const {
@@ -73,6 +79,19 @@ function EventDetail() {
   // Calculate event metadata
   const isPast = new Date(event.date) < new Date(new Date().toDateString())
   const fullName = `${rsvpForm.firstName} ${rsvpForm.lastName}`.trim()
+  const isOwner = currentUser && currentUser.email === event.organizerEmail
+
+  const handleDeleteEvent = async () => {
+    if (!window.confirm(`Delete "${event.name}"? This cannot be undone.`)) return
+    setDeleting(true)
+    try {
+      await deleteEvent(event.id, currentUser.email)
+      navigate('/my-events', { replace: true })
+    } catch (err) {
+      window.alert(err.message || 'Could not delete event.')
+      setDeleting(false)
+    }
+  }
   
   // Use custom hook for duplicate checking
   const alreadyAttending = isAlreadyAttending(rsvpForm.savedUserInfo)
@@ -213,6 +232,22 @@ function EventDetail() {
           <h1 className="detail-title">{event.name}</h1>
           <span className="detail-category">{event.category}</span>
         </div>
+
+        {isOwner && (
+          <div className="detail-owner-actions">
+            <Link to={`/events/${event.id}/edit`} className="btn btn--secondary btn--small">
+              Edit Event
+            </Link>
+            <button
+              type="button"
+              className="btn btn--danger btn--small"
+              onClick={handleDeleteEvent}
+              disabled={deleting}
+            >
+              {deleting ? 'Deleting...' : 'Delete Event'}
+            </button>
+          </div>
+        )}
 
         <div className="detail-info">
           {/* <p>📅 <strong>Date:</strong> {event.date}</p>

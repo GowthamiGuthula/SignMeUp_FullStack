@@ -69,6 +69,12 @@
     white-space: nowrap;
   }
   
+  .detail-owner-actions {
+    display: flex;
+    gap: 0.5rem;
+    margin-bottom: 1rem;
+  }
+
   .detail-info {
     display: flex;
     flex-direction: column;

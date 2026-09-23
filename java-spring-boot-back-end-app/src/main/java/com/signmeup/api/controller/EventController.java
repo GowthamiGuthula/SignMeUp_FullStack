@@ -39,4 +39,10 @@ public class EventController {
     public EventResponse updateEvent(@PathVariable Long id, @RequestBody EventRequest request) {
         return eventService.updateEvent(id, request);
     }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> deleteEvent(@PathVariable Long id, @RequestParam String organizerEmail) {
+        eventService.deleteEvent(id, organizerEmail);
+        return ResponseEntity.noContent().build();
+    }
 }

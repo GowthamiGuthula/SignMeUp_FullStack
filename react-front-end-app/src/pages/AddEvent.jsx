@@ -1,10 +1,12 @@
 import { useEffect, useState } from 'react'
 import { useNavigate, useParams } from 'react-router-dom'
+import { useAuth } from '../context/AuthContext'
 import { useEvents } from '../context/EventsContext'
 import * as api from '../services/api'
 import './AddEvent.css'
 
 function AddEvent() {
+  const { currentUser } = useAuth()
   const { events, addEvent, updateEvent } = useEvents()
   const navigate = useNavigate()
   const { id } = useParams()
@@ -19,7 +21,8 @@ function AddEvent() {
   const [totalSlots, setTotalSlots] = useState('')
   const [description, setDescription] = useState('')
   const [image, setImage] = useState('')
-  const [organizerEmail, setOrganizerEmail] = useState('')
+  // Pre-fill from the logged-in user; stays blank for guests
+  const [organizerEmail, setOrganizerEmail] = useState(currentUser?.email || '')
   const [submitting, setSubmitting] = useState(false)
   const [submitError, setSubmitError] = useState('')
   const [imageUploading, setImageUploading] = useState(false)

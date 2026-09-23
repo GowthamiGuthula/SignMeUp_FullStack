@@ -3,6 +3,7 @@ package com.signmeup.api.service;
 import com.signmeup.api.dto.EventRequest;
 import com.signmeup.api.dto.EventResponse;
 import com.signmeup.api.entity.Event;
+import com.signmeup.api.entity.EventCategory;
 import com.signmeup.api.entity.EventVisibility;
 import com.signmeup.api.exception.ForbiddenException;
 import com.signmeup.api.exception.ResourceNotFoundException;
@@ -18,10 +19,12 @@ public class EventService {
 
     private final EventRepository eventRepository;
     private final RsvpRepository rsvpRepository;
+    private final UnsplashService unsplashService;
 
-    public EventService(EventRepository eventRepository, RsvpRepository rsvpRepository) {
+    public EventService(EventRepository eventRepository, RsvpRepository rsvpRepository, UnsplashService unsplashService) {
         this.eventRepository = eventRepository;
         this.rsvpRepository = rsvpRepository;
+        this.unsplashService = unsplashService;
     }
 
     public List<EventResponse> getAllEvents() {
@@ -50,7 +53,7 @@ public class EventService {
                 request.category(),
                 request.totalSlots(),
                 request.description(),
-                request.imageUrl(),
+                resolveImageUrl(request.imageUrl(), request.category(), request.name()),
                 request.visibility() != null ? request.visibility() : EventVisibility.PUBLIC,
                 request.organizerEmail()
         );
@@ -74,11 +77,18 @@ public class EventService {
         event.setCategory(request.category());
         event.setTotalSlots(request.totalSlots());
         event.setDescription(request.description());
-        event.setImageUrl(request.imageUrl());
+        event.setImageUrl(resolveImageUrl(request.imageUrl(), request.category(), request.name()));
         event.setVisibility(request.visibility() != null ? request.visibility() : event.getVisibility());
         event.setOrganizerEmail(request.organizerEmail());
 
         return toResponse(eventRepository.save(event));
+    }
+
+    private String resolveImageUrl(String requestedUrl, EventCategory category, String name) {
+        if (requestedUrl != null && !requestedUrl.isBlank()) {
+            return requestedUrl;
+        }
+        return unsplashService.findImageUrl(category, name);
     }
 
     public void deleteEvent(Long id, String requesterEmail) {

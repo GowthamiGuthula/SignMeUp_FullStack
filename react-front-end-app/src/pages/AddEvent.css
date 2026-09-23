@@ -52,6 +52,31 @@
     font-weight: 600;
   }
 
+  .add-event-hint {
+    margin-top: -0.5rem;
+    font-size: 0.8rem;
+    color: #64748b;
+  }
+
+  .add-event-image-preview {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+  }
+
+  .add-event-image-preview img {
+    width: 160px;
+    height: 100px;
+    object-fit: cover;
+    border-radius: 8px;
+    border: 1.5px solid #e2e8f0;
+  }
+
+  .add-event-input:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+  }
+
   .add-event-actions {
     display: flex;
     gap: 0.75rem;
@@ -74,6 +99,11 @@
   
   .add-event-btn--primary:hover {
     background: #4f46e5;
+  }
+
+  .add-event-btn--primary:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
   }
   
   .add-event-btn--secondary {

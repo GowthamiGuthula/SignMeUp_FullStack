@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react'
 import { useNavigate, useParams } from 'react-router-dom'
 import { useEvents } from '../context/EventsContext'
+import * as api from '../services/api'
 import './AddEvent.css'
 
 function AddEvent() {
@@ -21,6 +22,8 @@ function AddEvent() {
   const [organizerEmail, setOrganizerEmail] = useState('')
   const [submitting, setSubmitting] = useState(false)
   const [submitError, setSubmitError] = useState('')
+  const [imageUploading, setImageUploading] = useState(false)
+  const [imageError, setImageError] = useState('')
 
   // When editing, load the existing event's details into the form
   useEffect(() => {
@@ -39,6 +42,28 @@ function AddEvent() {
     setOrganizerEmail(existing.organizerEmail)
   }, [isEditing, id, events])
 
+  const handleImageChange = async (e) => {
+    const file = e.target.files?.[0]
+    e.target.value = ''
+    if (!file) return
+
+    setImageError('')
+    setImageUploading(true)
+    try {
+      const { url } = await api.uploadImage(file)
+      setImage(url)
+    } catch (err) {
+      setImageError(err.message || 'Could not upload image')
+    } finally {
+      setImageUploading(false)
+    }
+  }
+
+  const handleRemoveImage = () => {
+    setImage('')
+    setImageError('')
+  }
+
   const handleSubmit = async (e) => {
     e.preventDefault()
     if (!name || !date || !time || !location || !totalSlots || !description || !organizerEmail) return
@@ -54,7 +79,9 @@ function AddEvent() {
         category,
         totalSlots: Number(totalSlots),
         description,
-        image: image || 'https://images.unsplash.com/photo-1501281668745-f7f57925c3b4?w=600&h=350&fit=crop',
+        // Leave blank when nothing was uploaded - the backend picks a
+        // relevant photo from Unsplash based on the event's category and name.
+        image,
         organizerEmail,
       }
 
@@ -161,15 +188,29 @@ function AddEvent() {
         </label>
 
         <label className="add-event-label">
-          Image URL (optional)
+          Event Image (optional)
           <input
-            type="text"
-            value={image}
-            onChange={(e) => setImage(e.target.value)}
-            placeholder="https://images.unsplash.com/..."
+            type="file"
+            accept="image/png,image/jpeg,image/gif,image/webp"
+            onChange={handleImageChange}
+            disabled={imageUploading}
             className="add-event-input"
           />
         </label>
+        <p className="add-event-hint">
+          {imageUploading
+            ? 'Uploading image...'
+            : "If you don't upload a photo, we'll pick one from Unsplash based on your event's category and name."}
+        </p>
+        {imageError && <p className="add-event-error">{imageError}</p>}
+        {image && (
+          <div className="add-event-image-preview">
+            <img src={image} alt="Event preview" />
+            <button type="button" className="add-event-btn add-event-btn--secondary" onClick={handleRemoveImage}>
+              Remove Photo
+            </button>
+          </div>
+        )}
 
         <label className="add-event-label">
           Your Email (organizer) *
@@ -185,7 +226,7 @@ function AddEvent() {
         {submitError && <p className="add-event-error">{submitError}</p>}
 
         <div className="add-event-actions">
-          <button type="submit" className="add-event-btn add-event-btn--primary" disabled={submitting}>
+          <button type="submit" className="add-event-btn add-event-btn--primary" disabled={submitting || imageUploading}>
             {submitting
               ? (isEditing ? 'Saving...' : 'Creating...')
               : (isEditing ? 'Save Changes' : 'Create Event')}

@@ -33,3 +33,6 @@ build/
 .vscode/
 
 *.log
+
+### Uploaded event images ###
+/uploads/

@@ -128,6 +128,22 @@
   background: #cbd5e1;
 }
 
+.my-events-btn--danger {
+  background: #fee2e2;
+  color: #dc2626;
+  border: none;
+  cursor: pointer;
+}
+
+.my-events-btn--danger:hover {
+  background: #fca5a5;
+}
+
+.my-events-btn--danger:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
 @media (max-width: 768px) {
   .my-events-header {
     flex-direction: column;

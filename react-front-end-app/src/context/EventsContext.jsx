@@ -16,6 +16,7 @@ function mapEvent(apiEvent, rsvps = []) {
     description: apiEvent.description,
     image: apiEvent.imageUrl,
     organizerEmail: apiEvent.organizerEmail,
+    organizerName: apiEvent.organizerName,
     attendees: rsvps
       .filter((r) => r.status === 'ATTENDING')
       .map((r) => ({
@@ -128,8 +129,13 @@ export function EventsProvider({ children }) {
     return mapped.id
   }
 
+  const deleteEvent = async (eventId, organizerEmail) => {
+    await api.deleteEvent(eventId, organizerEmail)
+    setEvents((prev) => prev.filter((ev) => ev.id !== eventId))
+  }
+
   return (
-    <EventsContext.Provider value={{ events, loading, error, rsvpToEvent, cancelRsvp, updateRsvpStatus, addEvent, updateEvent }}>
+    <EventsContext.Provider value={{ events, loading, error, rsvpToEvent, cancelRsvp, updateRsvpStatus, addEvent, updateEvent, deleteEvent }}>
       {children}
     </EventsContext.Provider>
   )

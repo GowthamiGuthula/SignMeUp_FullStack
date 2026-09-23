@@ -69,6 +69,37 @@ export function updateEvent(id, payload) {
   })
 }
 
+export function deleteEvent(id, organizerEmail) {
+  return request(`/events/${id}?organizerEmail=${encodeURIComponent(organizerEmail)}`, {
+    method: 'DELETE',
+  })
+}
+
+// Uploads an image file and returns its stored URL. Does not use `request()`
+// since it sends multipart/form-data instead of JSON.
+export async function uploadImage(file) {
+  const formData = new FormData()
+  formData.append('file', file)
+
+  const res = await fetch(`${API_BASE}/uploads`, {
+    method: 'POST',
+    body: formData,
+  })
+
+  if (!res.ok) {
+    let message = `Upload failed with status ${res.status}`
+    try {
+      const body = await res.json()
+      message = body.message || message
+    } catch {
+      // response had no JSON body
+    }
+    throw new Error(message)
+  }
+
+  return res.json()
+}
+
 export function fetchAttendees(eventId) {
   return request(`/events/${eventId}/rsvps`)
 }

@@ -18,6 +18,7 @@ public record EventResponse(
         String imageUrl,
         EventVisibility visibility,
         String organizerEmail,
+        String organizerName,
         LocalDateTime createdAt
 ) {
 }
